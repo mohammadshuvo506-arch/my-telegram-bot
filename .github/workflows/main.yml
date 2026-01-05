@@ -1,0 +1,25 @@
+name: Telegram Bot
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - name: Start Bot
+        env:
+          API_ID: 31291220
+          API_HASH: f8a900d9d3382b157b47c5564656f9f0
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          MONGO_URL: ${{ secrets.MONGO_URL }}
+          SESSION_STRING: ${{ secrets.SESSION_STRING }}
+        run: python main.py
